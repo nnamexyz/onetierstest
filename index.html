@@ -68,7 +68,7 @@
     <!-- Canvas Background Particles -->
     <canvas id="bgParticles" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Telegram Notification (Mobile Adapted: Bottom Right / Center on small screens) -->
+    <!-- Telegram Notification -->
     <div id="telegramWidget" class="fixed bottom-20 md:bottom-5 right-3 left-3 sm:left-auto sm:right-5 z-50 animate-fade-in max-w-sm">
         <div class="glass-panel p-3.5 sm:p-4 rounded-3xl border border-white/15 shadow-2xl flex items-center gap-3 relative overflow-hidden group">
             <button onclick="closeTelegramWidget()" class="absolute top-2.5 right-2.5 text-slate-500 hover:text-white text-xs w-6 h-6 rounded-full bg-white/5 flex items-center justify-center transition">
@@ -155,7 +155,7 @@
         </div>
     </header>
 
-    <!-- Gamemode Navigation (Horizontal Scroll on Mobile) -->
+    <!-- Gamemode Navigation -->
     <nav id="gamemodeNav" class="border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-[57px] sm:top-[65px] z-30 overflow-x-auto custom-scrollbar">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 flex space-x-2 min-w-max py-2 relative z-10" id="categoryTabs"></div>
     </nav>
@@ -174,11 +174,7 @@
                         Общий рейтинг сильнейших игроков по всем дисциплинам OneTiers
                     </p>
                 </div>
-                <div class="flex items-center gap-3" id="headerRightAction">
-                    <div class="bg-white/5 border border-white/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl text-[11px] sm:text-xs font-bold text-slate-300">
-                        <span data-i18n="totalPlayers">Игроков в топе:</span> <span id="totalPlayersCount" class="text-white font-black">0</span>
-                    </div>
-                </div>
+                <div class="flex items-center gap-3" id="headerRightAction"></div>
             </div>
 
             <!-- Table View (For Overall) -->
@@ -198,8 +194,8 @@
                 </div>
             </div>
 
-            <!-- Columns View Tier 1 - Tier 5 (1 col on Mobile, 5 cols on PC) -->
-            <div id="columnsViewContainer" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300"></div>
+            <!-- Columns View Tier 1 - Tier 5 -->
+            <div id="columnsViewContainer" class="hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300"></div>
         </div>
 
         <!-- 2. GUIDE VIEW -->
@@ -264,7 +260,7 @@
 
         <!-- Auth Code Modal -->
         <div id="authModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
-            <div class="glass-panel border border-white/15 rounded-3xl max-w-md w-full p-5 sm:p-8 shadow-2xl relative text-center space-y-4 sm:space-y-6 animate-fade-in max-h-[90vh] overflow-y-auto">
+            <div class="glass-panel border border-white/15 rounded-3xl max-w-md w-full p-5 sm:p-8 shadow-2xl relative text-center space-y-4 sm:space-y-6 animate-fade-in max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -309,10 +305,10 @@
         <!-- Player Profile Modal -->
         <div id="playerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
             <div class="glass-panel border border-white/15 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto custom-scrollbar">
-                <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition z-10">
+                <button onclick="closePlayerModal()" class="sticky top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/10 ml-auto flex items-center justify-center transition z-20">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                <div id="playerModalContent" class="p-5 sm:p-8"></div>
+                <div id="playerModalContent" class="p-5 sm:p-8 pt-0"></div>
             </div>
         </div>
 
@@ -340,7 +336,7 @@
 
     </main>
 
-    <!-- Mobile Bottom Navigation Bar (Visible only on smartphones) -->
+    <!-- Mobile Bottom Navigation Bar -->
     <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-panel border-t border-white/10 bg-black/90 px-6 py-2 flex items-center justify-around">
         <button onclick="navigateTo('leaderboard')" id="mobile-nav-leaderboard" class="flex flex-col items-center gap-1 text-white">
             <i class="fa-solid fa-trophy text-base"></i>
@@ -467,13 +463,13 @@
             { id: 'overall', apiKey: 'overall', name: 'Overall', icon: 'fa-trophy', invite: null },
             { id: 'sword', apiKey: 'sword', name: 'Sword', icon: 'fa-khanda', invite: "https://discord.gg/K26tts8ptr" },
             { id: 'op', apiKey: 'op', name: 'OP', icon: 'fa-bolt', invite: "https://discord.gg/3mh64EbcDn" },
-            { id: 'dpot', apiKey: 'dpot', name: 'DiamondPot', icon: 'fa-flask', invite: "https://discord.gg/" }
+            { id: 'dpot', apiKey: 'dpot', name: 'DiamondPot', icon: 'fa-flask', invite: "https://discord.gg/onetiers" }
         ];
 
         const DISCORDS = [
             { name: "Sword Network", invite: "https://discord.gg/K26tts8ptr", id: "1481569251092332641", icon: 'fa-khanda' },
             { name: "OP Network", invite: "https://discord.gg/3mh64EbcDn", id: "1485962524796125216", icon: 'fa-bolt' },
-            { name: "DiamondPot Network", invite: "https://discord.gg/", id: "1542845864773550090", icon: 'fa-flask' }
+            { name: "DiamondPot Network", invite: "https://discord.gg/onetiers", id: "1542845864773550090", icon: 'fa-flask' }
         ];
 
         const FAQS_RU = [
@@ -499,8 +495,14 @@
         let playersCache = {};
         let currentUser = null;
         let authPollInterval = null;
+        let authPollAttempts = 0;
         let currentAuthCode = null;
         let skinViewerInstance = null;
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initBackgroundParticles();
@@ -541,6 +543,7 @@
 
         function initBackgroundParticles() {
             const canvas = document.getElementById('bgParticles');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
@@ -615,7 +618,7 @@
                 <button onclick="switchCategory('${mode.id}')" 
                     class="px-4 sm:px-5 py-1.5 sm:py-2 rounded-xl text-xs font-extrabold transition-all duration-300 flex items-center gap-2 ${currentCategory === mode.id ? 'bg-white text-black shadow-lg shadow-white/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}">
                     <i class="fa-solid ${mode.icon}"></i>
-                    <span>${mode.name}</span>
+                    <span>${escapeHtml(mode.name)}</span>
                 </button>
             `).join('');
         }
@@ -632,8 +635,8 @@
                     <div class="flex items-center gap-3">
                         <i class="fa-solid ${d.icon} text-base sm:text-lg text-slate-300"></i>
                         <div>
-                            <div class="font-bold text-white text-xs sm:text-sm">${d.name}</div>
-                            <div class="text-[10px] font-mono text-slate-500 mt-0.5">ID: ${d.id}</div>
+                            <div class="font-bold text-white text-xs sm:text-sm">${escapeHtml(d.name)}</div>
+                            <div class="text-[10px] font-mono text-slate-500 mt-0.5">ID: ${escapeHtml(d.id)}</div>
                         </div>
                     </div>
                     <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl transition-all duration-300 font-extrabold shadow-md">
@@ -648,11 +651,11 @@
             document.getElementById('faqAccordion').innerHTML = faqs.map((item, i) => `
                 <div class="glass-panel border border-white/5 rounded-2xl overflow-hidden">
                     <button onclick="toggleFaq(${i})" class="w-full p-4 sm:p-5 text-left font-bold text-white flex justify-between items-center text-xs sm:text-sm hover:bg-white/5 transition">
-                        <span>${item.q}</span>
+                        <span>${escapeHtml(item.q)}</span>
                         <i id="faq-icon-${i}" class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
                     </button>
                     <div id="faq-ans-${i}" class="hidden p-4 sm:p-5 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/5">
-                        ${item.a}
+                        ${escapeHtml(item.a)}
                     </div>
                 </div>
             `).join('');
@@ -708,15 +711,16 @@
                 descEl.innerText = I18N[currentLang].overallDesc;
                 headerRight.innerHTML = `
                     <div class="bg-white/5 border border-white/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl text-[11px] sm:text-xs font-bold text-slate-300">
-                        <span>${I18N[currentLang].totalPlayers}</span> <span id="totalPlayersCount" class="text-white font-black">${leaderboardData.length}</span>
+                        <span>${I18N[currentLang].totalPlayers}</span> <span class="text-white font-black">${leaderboardData.length}</span>
                     </div>
                 `;
 
                 tableView.classList.remove('hidden');
                 columnsView.classList.add('hidden');
+                columnsView.classList.remove('grid');
                 renderOverallTable();
             } else {
-                titleEl.innerHTML = `<i class="fa-solid ${currentModeObj.icon} text-lg sm:text-xl"></i> ${currentModeObj.name}`;
+                titleEl.innerHTML = `<i class="fa-solid ${currentModeObj.icon} text-lg sm:text-xl"></i> ${escapeHtml(currentModeObj.name)}`;
                 descEl.innerText = `${I18N[currentLang].gamemodeDesc} ${currentModeObj.name}`;
                 
                 headerRight.innerHTML = `
@@ -730,6 +734,7 @@
 
                 tableView.classList.add('hidden');
                 columnsView.classList.remove('hidden');
+                columnsView.classList.add('grid');
                 renderTierColumns(currentModeObj);
             }
         }
@@ -741,16 +746,18 @@
 
             tbody.innerHTML = displayData.map((player, idx) => {
                 const rank = idx + 1;
-                const nick = player.nickname || `User_${player.discordId}`;
-                const avatar = `https://mc-heads.net/avatar/${nick}/32`;
+                const rawNick = player.nickname || `User_${player.discordId}`;
+                const nick = escapeHtml(rawNick);
+                const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(rawNick)}/32`;
+                const playerId = escapeHtml(player.discordId || player.nickname || '');
 
                 const col4 = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
                     const t = getPlayerTier(player, m);
-                    return t ? `<span class="tier-badge tier-${t.toLowerCase()}"><i class="fa-solid ${m.icon}"></i> ${m.name}: ${t}</span>` : '';
+                    return t ? `<span class="tier-badge tier-${escapeHtml(t.toLowerCase())}"><i class="fa-solid ${m.icon}"></i> ${escapeHtml(m.name)}: ${escapeHtml(t)}</span>` : '';
                 }).filter(Boolean).join(' ') || `<span class="text-xs text-slate-600">${I18N[currentLang].noTier}</span>`;
 
                 return `
-                    <tr class="hover:bg-white/[0.04] transition duration-200 cursor-pointer" onclick="openPlayerModal('${player.discordId || player.nickname}')">
+                    <tr class="hover:bg-white/[0.04] transition duration-200 cursor-pointer" onclick="openPlayerModal('${playerId}')">
                         <td class="p-3 sm:p-5 text-center font-black ${rank === 1 ? 'text-white text-base' : rank === 2 ? 'text-slate-300' : rank === 3 ? 'text-slate-400' : 'text-slate-600'}">
                             #${rank}
                         </td>
@@ -758,7 +765,7 @@
                             <img src="${avatar}" class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/32'">
                             <div>
                                 <div class="font-bold text-white hover:text-slate-300 transition text-xs sm:text-sm">${nick}</div>
-                                <div class="text-[10px] font-mono text-slate-500">ID: ${player.discordId || 'N/A'}</div>
+                                <div class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(player.discordId || 'N/A')}</div>
                             </div>
                         </td>
                         <td class="p-3 sm:p-5 text-center"><span class="font-black text-white text-xs sm:text-base">${player.overallScore || 0}</span></td>
@@ -792,10 +799,12 @@
                 const ltItems = items.filter(x => x.tier.startsWith('LT'));
 
                 const renderPlayerItem = (item) => {
-                    const nick = item.player.nickname || `User_${item.player.discordId}`;
-                    const avatar = `https://mc-heads.net/avatar/${nick}/24`;
+                    const rawNick = item.player.nickname || `User_${item.player.discordId}`;
+                    const nick = escapeHtml(rawNick);
+                    const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(rawNick)}/24`;
+                    const playerId = escapeHtml(item.player.discordId || item.player.nickname || '');
                     return `
-                        <div onclick="openPlayerModal('${item.player.discordId || nick}')" 
+                        <div onclick="openPlayerModal('${playerId}')" 
                             class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/10 cursor-pointer transition text-xs group">
                             <img src="${avatar}" class="w-6 h-6 rounded-lg bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/24'">
                             <span class="font-bold text-slate-300 group-hover:text-white transition truncate text-xs">${nick}</span>
@@ -835,6 +844,7 @@
         async function openAuthModal() {
             document.getElementById('authModal').classList.remove('hidden');
             document.getElementById('authCodeDisplay').innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i>`;
+            authPollAttempts = 0;
 
             try {
                 const res = await fetch(`${API_BASE}/auth/code`, { method: 'POST' });
@@ -852,21 +862,32 @@
 
         function closeAuthModal() {
             document.getElementById('authModal').classList.add('hidden');
-            if (authPollInterval) clearInterval(authPollInterval);
+            if (authPollInterval) {
+                clearInterval(authPollInterval);
+                authPollInterval = null;
+            }
         }
 
         async function pollAuthStatus() {
             if (!currentAuthCode) return;
+            
+            authPollAttempts++;
+            if (authPollAttempts > 150) { // Лимит 5 минут
+                closeAuthModal();
+                return;
+            }
+
             try {
                 const res = await fetch(`${API_BASE}/auth/check?code=${currentAuthCode}`);
                 const data = await res.json();
 
                 if (data.status === 'confirmed' && data.player) {
                     clearInterval(authPollInterval);
+                    authPollInterval = null;
                     currentUser = {
                         username: data.player.nickname || `User_${data.player.discordId}`,
                         id: data.player.discordId,
-                        avatar: `https://mc-heads.net/avatar/${data.player.nickname || 'Steve'}/64`,
+                        avatar: `https://mc-heads.net/avatar/${encodeURIComponent(data.player.nickname || 'Steve')}/64`,
                         playerData: data.player
                     };
                     localStorage.setItem('onetiers_user', JSON.stringify(currentUser));
@@ -880,8 +901,12 @@
         function checkAuth() {
             const saved = localStorage.getItem('onetiers_user');
             if (saved) {
-                currentUser = JSON.parse(saved);
-                updateAuthUI();
+                try {
+                    currentUser = JSON.parse(saved);
+                    updateAuthUI();
+                } catch(e) {
+                    localStorage.removeItem('onetiers_user');
+                }
             }
         }
 
@@ -897,8 +922,8 @@
             if (currentUser) {
                 container.innerHTML = `
                     <button onclick="navigateTo('profile')" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 p-1 sm:p-1.5 sm:pr-3.5 rounded-xl border border-white/10 transition">
-                        <img src="${currentUser.avatar}" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-black" onerror="this.src='https://crafthead.net/helm/Steve/24'">
-                        <span class="text-xs font-bold text-white hidden sm:inline">${currentUser.username}</span>
+                        <img src="${escapeHtml(currentUser.avatar)}" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-black" onerror="this.src='https://crafthead.net/helm/Steve/24'">
+                        <span class="text-xs font-bold text-white hidden sm:inline">${escapeHtml(currentUser.username)}</span>
                     </button>
                 `;
                 document.getElementById('userName').innerText = currentUser.username;
@@ -932,11 +957,11 @@
                     <div class="glass-panel p-3.5 rounded-2xl border border-white/5 flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <i class="fa-solid ${m.icon} text-xs text-slate-400"></i>
-                            <span class="font-bold text-slate-200 text-xs">${m.name}</span>
+                            <span class="font-bold text-slate-200 text-xs">${escapeHtml(m.name)}</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            ${cur ? `<span class="tier-badge tier-${cur.toLowerCase()}">${cur}</span>` : `<span class="text-xs text-slate-600 font-semibold">${I18N[currentLang].noTier}</span>`}
-                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${peak})</span>` : ''}
+                            ${cur ? `<span class="tier-badge tier-${escapeHtml(cur.toLowerCase())}">${escapeHtml(cur)}</span>` : `<span class="text-xs text-slate-600 font-semibold">${I18N[currentLang].noTier}</span>`}
+                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${escapeHtml(peak)})</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -966,8 +991,13 @@
         async function openPlayerModal(identifier) {
             const modal = document.getElementById('playerModal');
             const container = document.getElementById('playerModalContent');
-            modal.classList.remove('hidden');
+            
+            if (skinViewerInstance) {
+                skinViewerInstance.dispose();
+                skinViewerInstance = null;
+            }
 
+            modal.classList.remove('hidden');
             container.innerHTML = `<div class="p-12 text-center text-slate-400"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-white"></i><p class="text-xs font-bold">Loading player card...</p></div>`;
 
             let p = await fetchPlayerData(identifier) || leaderboardData.find(x => x.discordId === identifier || x.nickname === identifier);
@@ -977,7 +1007,8 @@
                 return;
             }
 
-            const nick = p.nickname || 'Steve';
+            const rawNick = p.nickname || 'Steve';
+            const nick = escapeHtml(rawNick);
 
             const tiersList = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
                 const cur = getPlayerTier(p, m);
@@ -986,18 +1017,18 @@
                     <div class="glass-panel p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
                             <i class="fa-solid ${m.icon} text-xs text-slate-400"></i>
-                            <span class="font-bold text-slate-300">${m.name}</span>
+                            <span class="font-bold text-slate-300">${escapeHtml(m.name)}</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            ${cur ? `<span class="tier-badge tier-${cur.toLowerCase()}">${cur}</span>` : '<span class="text-slate-600 font-medium">-</span>'}
-                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${peak})</span>` : ''}
+                            ${cur ? `<span class="tier-badge tier-${escapeHtml(cur.toLowerCase())}">${escapeHtml(cur)}</span>` : '<span class="text-slate-600 font-medium">-</span>'}
+                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${escapeHtml(peak)})</span>` : ''}
                         </div>
                     </div>
                 `;
             }).join('');
 
             container.innerHTML = `
-                <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+                <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start mt-2">
                     <div class="flex flex-col items-center justify-center glass-panel p-4 rounded-3xl border border-white/10 min-w-[180px] w-full sm:w-auto relative overflow-hidden">
                         <canvas id="skinContainer3d" class="w-40 h-52 cursor-grab active:cursor-grabbing"></canvas>
                         <div class="text-[10px] text-slate-500 font-semibold mb-2">3D View</div>
@@ -1014,7 +1045,7 @@
                                     Overall Rank #${p.rank || 'N/A'}
                                 </span>
                             </div>
-                            <p class="text-xs font-mono text-slate-500 mt-0.5">Discord ID: ${p.discordId}</p>
+                            <p class="text-xs font-mono text-slate-500 mt-0.5">Discord ID: ${escapeHtml(p.discordId || 'N/A')}</p>
                         </div>
 
                         <div class="grid grid-cols-2 gap-2.5 text-xs">
@@ -1043,17 +1074,19 @@
             setTimeout(() => {
                 try {
                     const canvas = document.getElementById('skinContainer3d');
-                    skinViewerInstance = new skinview3d.SkinViewer({
-                        canvas: canvas,
-                        width: 160,
-                        height: 200,
-                        skin: `https://mc-heads.net/skin/${nick}`
-                    });
-                    
-                    skinViewerInstance.fov = 70;
-                    skinViewerInstance.zoom = 0.9;
-                    skinViewerInstance.animation = new skinview3d.WalkingAnimation();
-                    skinViewerInstance.animation.speed = 0.6;
+                    if (canvas && typeof skinview3d !== 'undefined') {
+                        skinViewerInstance = new skinview3d.SkinViewer({
+                            canvas: canvas,
+                            width: 160,
+                            height: 200,
+                            skin: `https://mc-heads.net/skin/${encodeURIComponent(rawNick)}`
+                        });
+                        
+                        skinViewerInstance.fov = 70;
+                        skinViewerInstance.zoom = 0.9;
+                        skinViewerInstance.animation = new skinview3d.WalkingAnimation();
+                        skinViewerInstance.animation.speed = 0.6;
+                    }
                 } catch (err) {
                     console.warn("3D Skin failed to load:", err);
                 }
@@ -1061,9 +1094,10 @@
         }
 
         async function fetchPlayerData(identifier) {
+            if (!identifier) return null;
             if (playersCache[identifier]) return playersCache[identifier];
             try {
-                const res = await fetch(`${API_BASE}/players/${identifier}`);
+                const res = await fetch(`${API_BASE}/players/${encodeURIComponent(identifier)}`);
                 if (!res.ok) return null;
                 const data = await res.json();
                 playersCache[identifier] = data;
@@ -1087,8 +1121,8 @@
                     <div class="flex items-center gap-3">
                         <i class="fa-solid ${d.icon} text-slate-300"></i>
                         <div>
-                            <div class="font-bold text-xs sm:text-sm text-white">${d.name}</div>
-                            <div class="text-[10px] font-mono text-slate-500">ID: ${d.id}</div>
+                            <div class="font-bold text-xs sm:text-sm text-white">${escapeHtml(d.name)}</div>
+                            <div class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(d.id)}</div>
                         </div>
                     </div>
                     <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-extrabold transition shadow-md">${I18N[currentLang].joinBtn}</a>
@@ -1098,21 +1132,25 @@
 
         async function handleSearch(query) {
             const resultsBox = document.getElementById('searchResults');
-            if (query.trim().length < 2) { resultsBox.classList.add('hidden'); return; }
+            const trimmed = query.trim();
+            if (trimmed.length < 2) { resultsBox.classList.add('hidden'); return; }
 
             const filtered = leaderboardData.filter(p => 
-                (p.nickname && p.nickname.toLowerCase().includes(query.toLowerCase())) ||
-                (p.discordId && p.discordId.includes(query))
+                (p.nickname && p.nickname.toLowerCase().includes(trimmed.toLowerCase())) ||
+                (p.discordId && p.discordId.includes(trimmed))
             );
 
             if (filtered.length > 0) {
-                resultsBox.innerHTML = filtered.map(p => `
-                    <div onclick="openPlayerModal('${p.discordId}'); document.getElementById('searchResults').classList.add('hidden');" 
-                        class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5 last:border-0 transition">
-                        <span class="font-bold text-xs text-white">${p.nickname}</span>
-                        <span class="text-[10px] font-mono text-slate-500">ID: ${p.discordId}</span>
-                    </div>
-                `).join('');
+                resultsBox.innerHTML = filtered.map(p => {
+                    const idToPass = escapeHtml(p.discordId || p.nickname || '');
+                    return `
+                        <div onclick="openPlayerModal('${idToPass}'); document.getElementById('searchResults').classList.add('hidden');" 
+                            class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5 last:border-0 transition">
+                            <span class="font-bold text-xs text-white">${escapeHtml(p.nickname || 'Unknown')}</span>
+                            <span class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(p.discordId || 'N/A')}</span>
+                        </div>
+                    `;
+                }).join('');
                 resultsBox.classList.remove('hidden');
             } else {
                 resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center font-medium">Ничего не найдено</div>`;
