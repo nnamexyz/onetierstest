@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OneTiers — Первый тир-лист</title>
+    <title>OneTiers — Premier Minecraft Tierlist</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,59 +22,35 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .glass-panel-hover:hover {
+            background: rgba(28, 28, 32, 0.85);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.8);
+        }
         
-        /* Пьедестал и Подиум */
-        .podium-1 {
-            background: linear-gradient(180deg, rgba(234, 179, 8, 0.25) 0%, rgba(20, 20, 22, 0.8) 100%);
-            border-top: 3px solid #eab308;
-            box-shadow: 0 0 25px rgba(234, 179, 8, 0.15);
-        }
-        .podium-2 {
-            background: linear-gradient(180deg, rgba(203, 213, 225, 0.2) 0%, rgba(20, 20, 22, 0.8) 100%);
-            border-top: 3px solid #cbd5e1;
-        }
-        .podium-3 {
-            background: linear-gradient(180deg, rgba(180, 83, 9, 0.2) 0%, rgba(20, 20, 22, 0.8) 100%);
-            border-top: 3px solid #b45309;
-        }
-
-        /* Минималистичные тиры */
-        .mini-tier {
-            display: flex;
-            flex-direction: column;
+        /* Tier badges */
+        .tier-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 6px;
+            display: inline-flex;
             align-items: center;
-            gap: 2px;
-        }
-        .mini-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .mini-tag {
-            font-size: 9px;
-            font-weight: 900;
-            padding: 1px 5px;
-            border-radius: 4px;
+            gap: 4px;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
         }
-
-        /* Tier Colors */
-        .tier-ht1 { background: #ffffff; color: #000; font-weight: 900; }
+        .tier-ht1 { background: #ffffff; color: #000; font-weight: 900; box-shadow: 0 0 12px rgba(255,255,255,0.4); }
         .tier-lt1 { background: #e2e8f0; color: #0f172a; }
         .tier-ht2 { background: #cbd5e1; color: #0f172a; }
         .tier-lt2 { background: #94a3b8; color: #0f172a; }
         .tier-ht3 { background: #64748b; color: #fff; }
         .tier-lt3 { background: #475569; color: #fff; }
         .tier-ht4 { background: #334155; color: #cbd5e1; }
-        .tier-lt4 { background: #1e293b; color: #94a3b8; }
-        .tier-ht5 { background: #171c26; color: #64748b; }
-        .tier-lt5 { background: #0f1218; color: #475569; }
+        .tier-lt4 { background: #1e293b; color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
+        .tier-ht5 { background: #171c26; color: #64748b; border: 1px solid rgba(255,255,255,0.08); }
+        .tier-lt5 { background: #0f1218; color: #475569; border: 1px solid rgba(255,255,255,0.05); }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(10, 10, 12, 0.5); }
@@ -92,7 +68,7 @@
     <!-- Canvas Background Particles -->
     <canvas id="bgParticles" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Telegram Widget -->
+    <!-- Telegram Notification (Mobile Adapted: Bottom Right / Center on small screens) -->
     <div id="telegramWidget" class="fixed bottom-20 md:bottom-5 right-3 left-3 sm:left-auto sm:right-5 z-50 animate-fade-in max-w-sm">
         <div class="glass-panel p-3.5 sm:p-4 rounded-3xl border border-white/15 shadow-2xl flex items-center gap-3 relative overflow-hidden group">
             <button onclick="closeTelegramWidget()" class="absolute top-2.5 right-2.5 text-slate-500 hover:text-white text-xs w-6 h-6 rounded-full bg-white/5 flex items-center justify-center transition">
@@ -133,7 +109,7 @@
                         ONETIERS
                         <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
                     </h1>
-                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase">Первый тир-лист</p>
+                    <p class="text-[9px] sm:text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Official Tierlist</p>
                 </div>
             </div>
 
@@ -179,7 +155,7 @@
         </div>
     </header>
 
-    <!-- Gamemode Navigation -->
+    <!-- Gamemode Navigation (Horizontal Scroll on Mobile) -->
     <nav id="gamemodeNav" class="border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-[57px] sm:top-[65px] z-30 overflow-x-auto custom-scrollbar">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 flex space-x-2 min-w-max py-2 relative z-10" id="categoryTabs"></div>
     </nav>
@@ -187,24 +163,11 @@
     <!-- Main Content -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 relative z-10">
         
-        <!-- LEADERBOARD VIEW -->
-        <div id="view-leaderboard" class="space-y-6 animate-fade-in">
-
-            <!-- ПЬЕДЕСТАЛ ТОП-3 ИГРОКОВ -->
-            <div id="podiumContainer" class="hidden my-4 sm:my-8">
-                <div class="text-center mb-6">
-                    <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-full text-[10px] sm:text-xs font-black tracking-widest uppercase">
-                        OneTiers — Первый тир-лист
-                    </span>
-                    <h2 class="text-2xl sm:text-4xl font-black text-white mt-2 tracking-tight">Зал Славы</h2>
-                </div>
-                
-                <div class="flex items-end justify-center gap-2 sm:gap-6 max-w-2xl mx-auto pt-6" id="podiumCards"></div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 glass-panel p-4 sm:p-6 rounded-3xl border border-white/10">
+        <!-- 1. LEADERBOARD VIEW -->
+        <div id="view-leaderboard" class="space-y-4 sm:space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 glass-panel p-4 sm:p-8 rounded-3xl border border-white/10">
                 <div>
-                    <h2 id="currentCategoryTitle" class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                    <h2 id="currentCategoryTitle" class="text-xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
                         Overall Leaderboard
                     </h2>
                     <p id="currentCategoryDesc" class="text-[11px] sm:text-xs text-slate-400 mt-0.5" data-i18n="overallDesc">
@@ -218,7 +181,7 @@
                 </div>
             </div>
 
-            <!-- Table View (Overall) -->
+            <!-- Table View (For Overall) -->
             <div id="tableViewContainer" class="glass-panel rounded-3xl border border-white/10 overflow-hidden shadow-2xl transition-all duration-300">
                 <div class="overflow-x-auto custom-scrollbar">
                     <table class="w-full text-left border-collapse">
@@ -227,7 +190,7 @@
                                 <th class="p-3 sm:p-5 w-14 sm:w-20 text-center" data-i18n="thRank">Ранг</th>
                                 <th class="p-3 sm:p-5" data-i18n="thPlayer">Игрок</th>
                                 <th class="p-3 sm:p-5 text-center" data-i18n="thScore">Overall Score</th>
-                                <th class="p-3 sm:p-5 text-right" data-i18n="thTiers">Тиры</th>
+                                <th class="p-3 sm:p-5 text-right hidden sm:table-cell" data-i18n="thTiers">Тиры по дисциплинам</th>
                             </tr>
                         </thead>
                         <tbody id="leaderboardBody" class="divide-y divide-white/5 text-xs sm:text-sm"></tbody>
@@ -235,11 +198,11 @@
                 </div>
             </div>
 
-            <!-- Columns View Tier 1 - Tier 5 -->
+            <!-- Columns View Tier 1 - Tier 5 (1 col on Mobile, 5 cols on PC) -->
             <div id="columnsViewContainer" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300"></div>
         </div>
 
-        <!-- GUIDE VIEW -->
+        <!-- 2. GUIDE VIEW -->
         <div id="view-guide" class="hidden space-y-6 sm:space-y-10 max-w-5xl mx-auto animate-fade-in">
             <div class="text-center space-y-2 py-2">
                 <span class="px-3 py-0.5 bg-white/5 border border-white/10 text-slate-300 rounded-full text-[10px] font-black tracking-widest uppercase" data-i18n="guideBadge">Инструкция</span>
@@ -255,17 +218,17 @@
             <div class="space-y-3">
                 <h3 class="text-xs font-black uppercase tracking-widest text-slate-400" data-i18n="guideStep2Title">2. Шаги прохождения</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
-                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5">
+                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5 glass-panel-hover">
                         <div class="w-8 h-8 rounded-xl bg-white text-black font-black flex items-center justify-center text-sm">1</div>
                         <h4 class="font-extrabold text-white text-sm" data-i18n="step1Header">Привязка аккаунта</h4>
                         <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step1Desc">Зайдите в Discord выбранного кита и введите команду /link, затем подтвердите ник в игре через /verify.</p>
                     </div>
-                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5">
+                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5 glass-panel-hover">
                         <div class="w-8 h-8 rounded-xl bg-white text-black font-black flex items-center justify-center text-base">2</div>
                         <h4 class="font-extrabold text-white text-sm" data-i18n="step2Header">Подача заявки</h4>
                         <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step2Desc">Откройте тикет на тестирование в канале тестирования Discord-сервера и дождитесь свободного тиртестера.</p>
                     </div>
-                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5">
+                    <div class="glass-panel p-5 rounded-3xl space-y-2 border border-white/5 glass-panel-hover">
                         <div class="w-8 h-8 rounded-xl bg-white text-black font-black flex items-center justify-center text-base">3</div>
                         <h4 class="font-extrabold text-white text-sm" data-i18n="step3Header">Проведение дуэли</h4>
                         <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step3Desc">Сыграйте тестовый поединок против тестера. По итогам боя вам будет присвоен официальный тир.</p>
@@ -279,7 +242,7 @@
             </div>
         </div>
 
-        <!-- USER PROFILE VIEW -->
+        <!-- 3. USER PROFILE VIEW -->
         <div id="view-profile" class="hidden max-w-3xl mx-auto space-y-4 sm:space-y-6 animate-fade-in">
             <div class="glass-panel p-5 sm:p-8 rounded-3xl flex flex-col sm:flex-row items-center gap-4 sm:gap-6 border border-white/10 shadow-2xl relative overflow-hidden">
                 <img id="userAvatar" src="" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-white/20 shadow-xl bg-black object-cover">
@@ -299,22 +262,32 @@
             <div id="userProfileDetails" class="glass-panel p-5 sm:p-8 rounded-3xl space-y-4 sm:space-y-6 border border-white/10"></div>
         </div>
 
-        <!-- Modals -->
+        <!-- Auth Code Modal -->
         <div id="authModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
-            <div class="glass-panel border border-white/15 rounded-3xl max-w-md w-full p-5 sm:p-8 shadow-2xl relative text-center space-y-4 sm:space-y-6 animate-fade-in">
+            <div class="glass-panel border border-white/15 rounded-3xl max-w-md w-full p-5 sm:p-8 shadow-2xl relative text-center space-y-4 sm:space-y-6 animate-fade-in max-h-[90vh] overflow-y-auto">
                 <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
+
+                <div class="w-12 h-12 rounded-full border border-white/20 bg-black flex items-center justify-center p-2 mx-auto shadow-xl">
+                    <svg viewBox="0 0 500 500" class="w-full h-full text-white fill-current">
+                        <path d="M250 50 C 140 50, 50 140, 50 250 C 50 360, 140 450, 250 450 C 310 450, 365 425, 400 380 M 130 260 C 120 220, 135 180, 160 160 C 150 200, 160 220, 185 200 C 165 240, 170 260, 190 250" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                        <text x="300" y="300" font-family="'Plus Jakarta Sans', cursive, sans-serif" font-size="160" font-weight="900" font-style="italic" text-anchor="middle" fill="currentColor">One</text>
+                    </svg>
+                </div>
+
                 <div class="space-y-1">
                     <h3 class="text-xl sm:text-2xl font-black text-white" data-i18n="modalAuthTitle">Вход через Discord</h3>
                     <p class="text-xs text-slate-400" data-i18n="modalAuthSub">Введите команду на любом из наших Discord-серверов:</p>
                 </div>
+
                 <div class="bg-black/80 border border-white/10 p-4 rounded-2xl shadow-inner">
                     <div class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1" data-i18n="modalCodeTag">Одноразовый код</div>
                     <div id="authCodeDisplay" class="text-2xl sm:text-3xl font-mono font-black text-white tracking-widest select-all">
                         <i class="fa-solid fa-spinner fa-spin text-lg"></i>
                     </div>
                 </div>
+
                 <div class="bg-white/[0.02] p-3.5 rounded-2xl border border-white/5 text-left text-xs space-y-2">
                     <div class="text-slate-300 font-bold flex items-center gap-2">
                         <i class="fa-solid fa-terminal text-white"></i> <span data-i18n="modalInst">Инструкция:</span>
@@ -325,9 +298,15 @@
                         <li data-i18n="modalStep3">Страница автоматически авторизуется</li>
                     </ol>
                 </div>
+
+                <div class="text-[10px] sm:text-[11px] text-slate-500 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-notch fa-spin text-white"></i>
+                    <span data-i18n="modalWaiting">Ожидание ввода команды в Discord...</span>
+                </div>
             </div>
         </div>
 
+        <!-- Player Profile Modal -->
         <div id="playerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
             <div class="glass-panel border border-white/15 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition z-10">
@@ -337,13 +316,23 @@
             </div>
         </div>
 
+        <!-- Discords Modal -->
         <div id="discordModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
             <div class="glass-panel border border-white/15 rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-2xl relative space-y-4 sm:space-y-5 animate-fade-in">
                 <button onclick="toggleDiscordModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <div class="flex items-center gap-3">
-                    <h3 class="text-lg sm:text-xl font-black text-white">Discord Серверы</h3>
+                    <div class="w-9 h-9 rounded-full border border-white/20 bg-black flex items-center justify-center p-1.5">
+                        <svg viewBox="0 0 500 500" class="w-full h-full text-white fill-current">
+                            <path d="M250 50 C 140 50, 50 140, 50 250 C 50 360, 140 450, 250 450 C 310 450, 365 425, 400 380 M 130 260 C 120 220, 135 180, 160 160 C 150 200, 160 220, 185 200 C 165 240, 170 260, 190 250" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <text x="300" y="300" font-family="'Plus Jakarta Sans', cursive, sans-serif" font-size="160" font-weight="900" font-style="italic" text-anchor="middle" fill="currentColor">One</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-black text-white">Discord Серверы</h3>
+                        <p class="text-[11px] text-slate-400" data-i18n="discordModalSub">Выберите нужный кит для подключения</p>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 gap-2.5 max-h-80 overflow-y-auto pr-1 custom-scrollbar" id="discordList"></div>
             </div>
@@ -351,7 +340,7 @@
 
     </main>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Mobile Bottom Navigation Bar (Visible only on smartphones) -->
     <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-panel border-t border-white/10 bg-black/90 px-6 py-2 flex items-center justify-around">
         <button onclick="navigateTo('leaderboard')" id="mobile-nav-leaderboard" class="flex flex-col items-center gap-1 text-white">
             <i class="fa-solid fa-trophy text-base"></i>
@@ -370,12 +359,11 @@
     <!-- Footer -->
     <footer class="glass-panel border-t border-white/5 py-6 text-center text-[11px] text-slate-500 mt-auto relative z-10">
         <div class="max-w-7xl mx-auto px-4 space-y-1">
-            <p>&copy; 2026 OneTiers. Все права защищены.</p>
+            <p>&copy; 2026 OneTiers. Все права защищены. Не связан с Mojang AB.</p>
         </div>
     </footer>
 
     <script>
-        // Работает через прокси Vercel
         const API_BASE = '/api';
 
         let currentLang = localStorage.getItem('onetiers_lang') || 'RU';
@@ -393,7 +381,7 @@
                 thRank: "Ранг",
                 thPlayer: "Игрок",
                 thScore: "Overall Score",
-                thTiers: "Тиры",
+                thTiers: "Тиры по дисциплинам",
                 tgTitle: "Telegram Канал",
                 tgDesc: "Подписывайтесь на наш телеграм канал @onetiers",
                 tgBtn: "Подписаться",
@@ -439,7 +427,7 @@
                 thRank: "Rank",
                 thPlayer: "Player",
                 thScore: "Overall Score",
-                thTiers: "Tiers",
+                thTiers: "Gamemode Tiers",
                 tgTitle: "Telegram Channel",
                 tgDesc: "Subscribe to our Telegram channel @onetiers",
                 tgBtn: "Subscribe",
@@ -475,29 +463,33 @@
             }
         };
 
-        // ДИСЦИПЛИНЫ И ИХ МИНИ-ИКОНКИ
         const GAMEMODES = [
             { id: 'overall', apiKey: 'overall', name: 'Overall', icon: 'fa-trophy', invite: null },
-            { id: 'sword', apiKey: 'sword', name: 'Sword', icon: 'fa-shield-halved', color: 'text-amber-400', invite: "https://discord.gg/K26tts8ptr" },
-            { id: 'op', apiKey: 'op', name: 'OP', icon: 'fa-circle-dot', color: 'text-emerald-400', invite: "https://discord.gg/3mh64EbcDn" },
-            { id: 'dpot', apiKey: 'dpot', name: 'DiamondPot', icon: 'fa-flask', color: 'text-cyan-400', invite: "https://discord.gg/" }
+            { id: 'sword', apiKey: 'sword', name: 'Sword', icon: 'fa-khanda', invite: "https://discord.gg/K26tts8ptr" },
+            { id: 'op', apiKey: 'op', name: 'OP', icon: 'fa-bolt', invite: "https://discord.gg/3mh64EbcDn" },
+            { id: 'dpot', apiKey: 'dpot', name: 'DiamondPot', icon: 'fa-flask', invite: "https://discord.gg/" }
         ];
 
         const DISCORDS = [
-            { name: "Sword Network", invite: "https://discord.gg/K26tts8ptr", id: "1481569251092332641", icon: 'fa-shield-halved' },
-            { name: "OP Network", invite: "https://discord.gg/3mh64EbcDn", id: "1485962524796125216", icon: 'fa-circle-dot' },
+            { name: "Sword Network", invite: "https://discord.gg/K26tts8ptr", id: "1481569251092332641", icon: 'fa-khanda' },
+            { name: "OP Network", invite: "https://discord.gg/3mh64EbcDn", id: "1485962524796125216", icon: 'fa-bolt' },
             { name: "DiamondPot Network", invite: "https://discord.gg/", id: "1542845864773550090", icon: 'fa-flask' }
         ];
 
         const FAQS_RU = [
             { q: "Что такое тир-лист?", a: "Тир-лист — это глобальный рейтинг игроков, где силы участников распределены по нескольким тирам (Tier 1 - Tier 5)." },
             { q: "Что такое Тиры и как они работают?", a: "Тиры делятся от HT1 (высший тир) до LT5 (начальный тир). Каждая ступень разделена на High (HT) и Low (LT)." },
-            { q: "Как повысить свой тир?", a: "Повысить свой тир можно проходя официальные тир-тесты против назначенных тестеров." }
+            { q: "Как повысить свой тир?", a: "Повысить свой тир можно проходя официальные тир-тесты против назначенных тестеров." },
+            { q: "Что такое квалификационный тест?", a: "Квалификационный тест — это первичный бой для новых игроков без тира. Максимальный стартовый тир — LT3." },
+            { q: "Что такое Restricted?", a: "Restricted — это статус ограничения доступа к тир-тестам за использование читов или обход наказаний." }
         ];
 
         const FAQS_ENG = [
             { q: "What is a Tierlist?", a: "A Tierlist is a global player ranking where player skill is divided into tiers (Tier 1 to Tier 5)." },
-            { q: "What are Tiers and how do they work?", a: "Tiers range from HT1 (highest) to LT5 (lowest). Each rank is split into High (HT) and Low (LT)." }
+            { q: "What are Tiers and how do they work?", a: "Tiers range from HT1 (highest) to LT5 (lowest). Each rank is split into High (HT) and Low (LT)." },
+            { q: "How do I upgrade my Tier?", a: "You can upgrade your tier by taking official tier tests against designated testers." },
+            { q: "What is a Qualification Test?", a: "A qualification test is an initial fight for new unranked players. The maximum starting tier is LT3." },
+            { q: "What is Restricted status?", a: "Restricted is a status limiting access to tier testing for cheating or punishment evasion." }
         ];
 
         const TIER_ORDER = { 'HT1': 1, 'LT1': 2, 'HT2': 3, 'LT2': 4, 'HT3': 5, 'LT3': 6, 'HT4': 7, 'LT4': 8, 'HT5': 9, 'LT5': 10 };
@@ -506,6 +498,9 @@
         let leaderboardData = [];
         let playersCache = {};
         let currentUser = null;
+        let authPollInterval = null;
+        let currentAuthCode = null;
+        let skinViewerInstance = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             initBackgroundParticles();
@@ -523,14 +518,20 @@
             localStorage.setItem('onetiers_lang', currentLang);
             applyLanguage();
             renderLeaderboard();
+            renderGuideSection();
+            renderFAQ();
+            renderDiscordList();
         }
 
         function applyLanguage() {
             document.getElementById('currentLangLabel').innerText = currentLang;
             document.getElementById('searchInput').placeholder = I18N[currentLang].searchPlaceholder;
+
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (I18N[currentLang][key]) el.innerText = I18N[currentLang][key];
+                if (I18N[currentLang][key]) {
+                    el.innerText = I18N[currentLang][key];
+                }
             });
         }
 
@@ -544,13 +545,22 @@
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
 
-            const particles = Array.from({ length: 45 }, () => ({
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }, 100);
+            });
+
+            const particles = Array.from({ length: 50 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
                 radius: Math.random() * 2 + 0.8,
-                vy: Math.random() * 0.6 + 0.2,
+                vy: Math.random() * 0.7 + 0.2,
                 vx: (Math.random() - 0.5) * 0.3,
-                alpha: Math.random() * 0.6 + 0.2
+                alpha: Math.random() * 0.7 + 0.2
             }));
 
             function animate() {
@@ -559,9 +569,13 @@
                     p.y += p.vy;
                     p.x += p.vx;
                     if (p.y > height) { p.y = -5; p.x = Math.random() * width; }
+                    if (p.x < 0 || p.x > width) { p.vx *= -1; }
+
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = "rgba(255, 255, 255, 0.5)";
                     ctx.fill();
                 });
                 requestAnimationFrame(animate);
@@ -575,11 +589,21 @@
             document.getElementById('view-profile').classList.add('hidden');
             document.getElementById('gamemodeNav').classList.add('hidden');
 
+            document.getElementById('nav-leaderboard').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5";
+            document.getElementById('nav-guide').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5";
+            
+            document.getElementById('mobile-nav-leaderboard').className = "flex flex-col items-center gap-1 text-slate-400";
+            document.getElementById('mobile-nav-guide').className = "flex flex-col items-center gap-1 text-slate-400";
+
             if (viewName === 'leaderboard') {
                 document.getElementById('view-leaderboard').classList.remove('hidden');
                 document.getElementById('gamemodeNav').classList.remove('hidden');
+                document.getElementById('nav-leaderboard').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10";
+                document.getElementById('mobile-nav-leaderboard').className = "flex flex-col items-center gap-1 text-white font-bold";
             } else if (viewName === 'guide') {
                 document.getElementById('view-guide').classList.remove('hidden');
+                document.getElementById('nav-guide').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10";
+                document.getElementById('mobile-nav-guide').className = "flex flex-col items-center gap-1 text-white font-bold";
             } else if (viewName === 'profile') {
                 document.getElementById('view-profile').classList.remove('hidden');
             }
@@ -604,15 +628,15 @@
 
         function renderGuideSection() {
             document.getElementById('guideDiscordGrid').innerHTML = DISCORDS.map(d => `
-                <div class="glass-panel p-4 rounded-3xl flex items-center justify-between border border-white/5">
+                <div class="glass-panel p-4 sm:p-5 rounded-3xl flex items-center justify-between border border-white/5 glass-panel-hover">
                     <div class="flex items-center gap-3">
-                        <i class="fa-solid ${d.icon} text-slate-300"></i>
+                        <i class="fa-solid ${d.icon} text-base sm:text-lg text-slate-300"></i>
                         <div>
                             <div class="font-bold text-white text-xs sm:text-sm">${d.name}</div>
-                            <div class="text-[10px] font-mono text-slate-500">ID: ${d.id}</div>
+                            <div class="text-[10px] font-mono text-slate-500 mt-0.5">ID: ${d.id}</div>
                         </div>
                     </div>
-                    <a href="${d.invite}" target="_blank" class="bg-white text-black text-xs px-3.5 py-1.5 rounded-xl font-extrabold shadow-md">
+                    <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl transition-all duration-300 font-extrabold shadow-md">
                         ${I18N[currentLang].joinBtn}
                     </a>
                 </div>
@@ -623,11 +647,11 @@
             const faqs = currentLang === 'RU' ? FAQS_RU : FAQS_ENG;
             document.getElementById('faqAccordion').innerHTML = faqs.map((item, i) => `
                 <div class="glass-panel border border-white/5 rounded-2xl overflow-hidden">
-                    <button onclick="toggleFaq(${i})" class="w-full p-4 text-left font-bold text-white flex justify-between items-center text-xs sm:text-sm">
+                    <button onclick="toggleFaq(${i})" class="w-full p-4 sm:p-5 text-left font-bold text-white flex justify-between items-center text-xs sm:text-sm hover:bg-white/5 transition">
                         <span>${item.q}</span>
                         <i id="faq-icon-${i}" class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
                     </button>
-                    <div id="faq-ans-${i}" class="hidden p-4 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/5">
+                    <div id="faq-ans-${i}" class="hidden p-4 sm:p-5 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/5">
                         ${item.a}
                     </div>
                 </div>
@@ -643,6 +667,16 @@
             if (!player) return null;
             const apiKey = mode.apiKey || mode.id;
             const keyCandidates = [`${apiKey}Tiers`, `${apiKey.toLowerCase()}Tiers`];
+            for (let k of keyCandidates) {
+                if (player[k] && Array.isArray(player[k]) && player[k].length > 0) return player[k][0];
+            }
+            return null;
+        }
+
+        function getPlayerPeakTier(player, mode) {
+            if (!player) return null;
+            const apiKey = mode.apiKey || mode.id;
+            const keyCandidates = [`${apiKey}PeakTiers`, `${apiKey.toLowerCase()}PeakTiers`];
             for (let k of keyCandidates) {
                 if (player[k] && Array.isArray(player[k]) && player[k].length > 0) return player[k][0];
             }
@@ -665,76 +699,41 @@
             const currentModeObj = GAMEMODES.find(m => m.id === currentCategory);
             const titleEl = document.getElementById('currentCategoryTitle');
             const descEl = document.getElementById('currentCategoryDesc');
+            const headerRight = document.getElementById('headerRightAction');
             const tableView = document.getElementById('tableViewContainer');
             const columnsView = document.getElementById('columnsViewContainer');
-            const podiumContainer = document.getElementById('podiumContainer');
 
             if (currentCategory === 'overall') {
                 titleEl.innerHTML = I18N[currentLang].overallTitle;
                 descEl.innerText = I18N[currentLang].overallDesc;
+                headerRight.innerHTML = `
+                    <div class="bg-white/5 border border-white/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl text-[11px] sm:text-xs font-bold text-slate-300">
+                        <span>${I18N[currentLang].totalPlayers}</span> <span id="totalPlayersCount" class="text-white font-black">${leaderboardData.length}</span>
+                    </div>
+                `;
 
                 tableView.classList.remove('hidden');
                 columnsView.classList.add('hidden');
-                podiumContainer.classList.remove('hidden');
-                
-                renderPodium();
                 renderOverallTable();
             } else {
-                titleEl.innerHTML = `<i class="fa-solid ${currentModeObj.icon} text-lg"></i> ${currentModeObj.name}`;
+                titleEl.innerHTML = `<i class="fa-solid ${currentModeObj.icon} text-lg sm:text-xl"></i> ${currentModeObj.name}`;
                 descEl.innerText = `${I18N[currentLang].gamemodeDesc} ${currentModeObj.name}`;
+                
+                headerRight.innerHTML = `
+                    ${currentModeObj.invite ? `
+                        <a href="${currentModeObj.invite}" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-extrabold flex items-center gap-2 transition shadow-lg shadow-[#5865F2]/20">
+                            <i class="fa-brands fa-discord"></i>
+                            <span>Discord Server</span>
+                        </a>
+                    ` : ''}
+                `;
 
                 tableView.classList.add('hidden');
                 columnsView.classList.remove('hidden');
-                podiumContainer.classList.add('hidden');
-
                 renderTierColumns(currentModeObj);
             }
         }
 
-        // ОТРИСОВКА ТОП-3 НА ПЬЕДЕСТАЛЕ
-        function renderPodium() {
-            let sorted = [...leaderboardData].sort((a, b) => (b.overallScore || 0) - (a.overallScore || 0));
-            const podiumCards = document.getElementById('podiumCards');
-
-            if (sorted.length < 1) {
-                podiumCards.innerHTML = '';
-                return;
-            }
-
-            const top1 = sorted[0];
-            const top2 = sorted[1];
-            const top3 = sorted[2];
-
-            const renderCard = (p, rank, podiumClass, heightClass, avatarSize) => {
-                if (!p) return '<div class="w-1/3"></div>';
-                const nick = p.nickname || `User_${p.discordId}`;
-                const headUrl = `https://mc-heads.net/avatar/${nick}/${avatarSize}`;
-
-                return `
-                    <div class="flex flex-col items-center w-1/3 group cursor-pointer" onclick="openPlayerModal('${p.discordId || nick}')">
-                        <div class="flex flex-col items-center mb-2">
-                            <div class="relative mb-2">
-                                <img src="${headUrl}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl border-2 border-white/20 shadow-2xl bg-black object-cover group-hover:scale-110 transition duration-300">
-                            </div>
-                            <span class="font-extrabold text-white text-xs sm:text-sm truncate max-w-[90px] sm:max-w-[120px] text-center">${nick}</span>
-                            <span class="text-[10px] sm:text-xs font-bold text-amber-400 mt-0.5">${p.overallScore || 0} очков</span>
-                        </div>
-
-                        <div class="w-full ${heightClass} ${podiumClass} rounded-t-2xl flex items-center justify-center font-black text-2xl sm:text-4xl text-white/90 shadow-xl">
-                            ${rank}
-                        </div>
-                    </div>
-                `;
-            };
-
-            podiumCards.innerHTML = `
-                ${renderCard(top2, 2, 'podium-2', 'h-24 sm:h-28', 48)}
-                ${renderCard(top1, 1, 'podium-1', 'h-32 sm:h-36', 64)}
-                ${renderCard(top3, 3, 'podium-3', 'h-20 sm:h-24', 48)}
-            `;
-        }
-
-        // МИНИМАЛИСТИЧНЫЙ СПИСОК ИГРОКОВ (С КРУГЛЫМИ ЗНАЧКАМИ ИКОНОК)
         function renderOverallTable() {
             const tbody = document.getElementById('leaderboardBody');
             let displayData = [...leaderboardData];
@@ -745,38 +744,25 @@
                 const nick = player.nickname || `User_${player.discordId}`;
                 const avatar = `https://mc-heads.net/avatar/${nick}/32`;
 
-                // Генерация иконок для каждого кита (как на фото 3)
-                const miniTiersHtml = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
+                const col4 = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
                     const t = getPlayerTier(player, m);
-                    if (!t) return '';
-                    return `
-                        <div class="mini-tier" title="${m.name}: ${t}">
-                            <div class="mini-icon ${m.color}">
-                                <i class="fa-solid ${m.icon}"></i>
-                            </div>
-                            <span class="mini-tag tier-${t.toLowerCase()}">${t}</span>
-                        </div>
-                    `;
-                }).filter(Boolean).join('') || `<span class="text-xs text-slate-600">${I18N[currentLang].noTier}</span>`;
+                    return t ? `<span class="tier-badge tier-${t.toLowerCase()}"><i class="fa-solid ${m.icon}"></i> ${m.name}: ${t}</span>` : '';
+                }).filter(Boolean).join(' ') || `<span class="text-xs text-slate-600">${I18N[currentLang].noTier}</span>`;
 
                 return `
                     <tr class="hover:bg-white/[0.04] transition duration-200 cursor-pointer" onclick="openPlayerModal('${player.discordId || player.nickname}')">
-                        <td class="p-3 sm:p-5 text-center font-black ${rank === 1 ? 'text-amber-400 text-base' : rank === 2 ? 'text-slate-300' : rank === 3 ? 'text-amber-600' : 'text-slate-600'}">
+                        <td class="p-3 sm:p-5 text-center font-black ${rank === 1 ? 'text-white text-base' : rank === 2 ? 'text-slate-300' : rank === 3 ? 'text-slate-400' : 'text-slate-600'}">
                             #${rank}
                         </td>
                         <td class="p-3 sm:p-5 flex items-center gap-2.5 sm:gap-3.5">
-                            <img src="${avatar}" class="w-8 h-8 rounded-xl bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/32'">
+                            <img src="${avatar}" class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/32'">
                             <div>
-                                <div class="font-bold text-white text-xs sm:text-sm">${nick}</div>
+                                <div class="font-bold text-white hover:text-slate-300 transition text-xs sm:text-sm">${nick}</div>
                                 <div class="text-[10px] font-mono text-slate-500">ID: ${player.discordId || 'N/A'}</div>
                             </div>
                         </td>
                         <td class="p-3 sm:p-5 text-center"><span class="font-black text-white text-xs sm:text-base">${player.overallScore || 0}</span></td>
-                        <td class="p-3 sm:p-5 text-right">
-                            <div class="flex items-center justify-end gap-2">
-                                ${miniTiersHtml}
-                            </div>
-                        </td>
+                        <td class="p-3 sm:p-5 text-right space-x-1.5 hidden sm:table-cell">${col4}</td>
                     </tr>
                 `;
             }).join('');
@@ -788,14 +774,18 @@
 
             leaderboardData.forEach(player => {
                 const tier = getPlayerTier(player, modeObj);
+                
                 if (tier && typeof tier === 'string') {
                     const num = tier.replace(/[^0-9]/g, '');
-                    if (tierGroups[num]) tierGroups[num].push({ player, tier });
+                    if (tierGroups[num]) {
+                        tierGroups[num].push({ player, tier });
+                    }
                 }
             });
 
             container.innerHTML = [1, 2, 3, 4, 5].map(tierNum => {
                 const items = tierGroups[tierNum] || [];
+                
                 items.sort((a, b) => (TIER_ORDER[a.tier] || 99) - (TIER_ORDER[b.tier] || 99));
 
                 const htItems = items.filter(x => x.tier.startsWith('HT'));
@@ -814,7 +804,7 @@
                 };
 
                 return `
-                    <div class="glass-panel p-3.5 sm:p-4 rounded-3xl border border-white/10 flex flex-col space-y-3">
+                    <div class="glass-panel p-3.5 sm:p-4 rounded-3xl border border-white/10 flex flex-col space-y-3 transition-all duration-300">
                         <div class="flex items-center justify-between pb-2 border-b border-white/10">
                             <span class="text-xs font-black tracking-widest text-white uppercase">TIER ${tierNum}</span>
                             <span class="text-[10px] font-mono text-slate-400 font-bold bg-white/5 px-2 py-0.5 rounded-lg border border-white/10">${items.length}</span>
@@ -844,23 +834,133 @@
 
         async function openAuthModal() {
             document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('authCodeDisplay').innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i>`;
+
+            try {
+                const res = await fetch(`${API_BASE}/auth/code`, { method: 'POST' });
+                const data = await res.json();
+                currentAuthCode = data.code;
+                document.getElementById('authCodeDisplay').innerText = data.code;
+                document.getElementById('authCommandText').innerText = `/site-auth ${data.code}`;
+
+                if (authPollInterval) clearInterval(authPollInterval);
+                authPollInterval = setInterval(pollAuthStatus, 2000);
+            } catch (e) {
+                document.getElementById('authCodeDisplay').innerText = "ERROR";
+            }
         }
 
         function closeAuthModal() {
             document.getElementById('authModal').classList.add('hidden');
+            if (authPollInterval) clearInterval(authPollInterval);
+        }
+
+        async function pollAuthStatus() {
+            if (!currentAuthCode) return;
+            try {
+                const res = await fetch(`${API_BASE}/auth/check?code=${currentAuthCode}`);
+                const data = await res.json();
+
+                if (data.status === 'confirmed' && data.player) {
+                    clearInterval(authPollInterval);
+                    currentUser = {
+                        username: data.player.nickname || `User_${data.player.discordId}`,
+                        id: data.player.discordId,
+                        avatar: `https://mc-heads.net/avatar/${data.player.nickname || 'Steve'}/64`,
+                        playerData: data.player
+                    };
+                    localStorage.setItem('onetiers_user', JSON.stringify(currentUser));
+                    closeAuthModal();
+                    updateAuthUI();
+                    navigateTo('profile');
+                }
+            } catch (e) {}
         }
 
         function checkAuth() {
             const saved = localStorage.getItem('onetiers_user');
             if (saved) {
                 currentUser = JSON.parse(saved);
+                updateAuthUI();
             }
         }
 
         function logoutDiscord() {
             localStorage.removeItem('onetiers_user');
             currentUser = null;
+            updateAuthUI();
             navigateTo('leaderboard');
+        }
+
+        function updateAuthUI() {
+            const container = document.getElementById('authContainer');
+            if (currentUser) {
+                container.innerHTML = `
+                    <button onclick="navigateTo('profile')" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 p-1 sm:p-1.5 sm:pr-3.5 rounded-xl border border-white/10 transition">
+                        <img src="${currentUser.avatar}" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-black" onerror="this.src='https://crafthead.net/helm/Steve/24'">
+                        <span class="text-xs font-bold text-white hidden sm:inline">${currentUser.username}</span>
+                    </button>
+                `;
+                document.getElementById('userName').innerText = currentUser.username;
+                document.getElementById('userDiscordId').innerText = `Discord ID: ${currentUser.id}`;
+                document.getElementById('userAvatar').src = currentUser.avatar;
+                
+                renderUserProfileData(currentUser.id);
+            } else {
+                container.innerHTML = `
+                    <button onclick="openAuthModal()" class="flex items-center gap-1.5 bg-white hover:bg-slate-200 text-black text-xs font-extrabold px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-xl transition-all shadow-lg shadow-white/10 active:scale-95">
+                        <i class="fa-brands fa-discord text-sm"></i>
+                        <span class="hidden sm:inline">${I18N[currentLang].login}</span>
+                    </button>
+                `;
+            }
+        }
+
+        async function renderUserProfileData(discordId) {
+            const container = document.getElementById('userProfileDetails');
+            const data = await fetchPlayerData(discordId);
+            
+            if (!data) {
+                container.innerHTML = `<div class="text-xs text-slate-500">Failed to load profile data.</div>`;
+                return;
+            }
+
+            const tiersList = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
+                const cur = getPlayerTier(data, m);
+                const peak = getPlayerPeakTier(data, m);
+                return `
+                    <div class="glass-panel p-3.5 rounded-2xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid ${m.icon} text-xs text-slate-400"></i>
+                            <span class="font-bold text-slate-200 text-xs">${m.name}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${cur ? `<span class="tier-badge tier-${cur.toLowerCase()}">${cur}</span>` : `<span class="text-xs text-slate-600 font-semibold">${I18N[currentLang].noTier}</span>`}
+                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${peak})</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="glass-panel p-4 rounded-2xl border border-white/5">
+                        <div class="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Overall Score</div>
+                        <div class="text-xl sm:text-2xl font-black text-white mt-1">${data.overallScore || 0}</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl border border-white/5">
+                        <div class="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Rank</div>
+                        <div class="text-xl sm:text-2xl font-black text-white mt-1">#${data.rank || 'N/A'}</div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-1">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-slate-400">Tiers</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        ${tiersList}
+                    </div>
+                </div>
+            `;
         }
 
         async function openPlayerModal(identifier) {
@@ -870,7 +970,7 @@
 
             container.innerHTML = `<div class="p-12 text-center text-slate-400"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-white"></i><p class="text-xs font-bold">Loading player card...</p></div>`;
 
-            let p = leaderboardData.find(x => x.discordId === identifier || x.nickname === identifier);
+            let p = await fetchPlayerData(identifier) || leaderboardData.find(x => x.discordId === identifier || x.nickname === identifier);
 
             if (!p) {
                 container.innerHTML = `<div class="p-6 text-center text-red-400 font-bold">Player not found.</div>`;
@@ -879,21 +979,62 @@
 
             const nick = p.nickname || 'Steve';
 
+            const tiersList = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
+                const cur = getPlayerTier(p, m);
+                const peak = getPlayerPeakTier(p, m);
+                return `
+                    <div class="glass-panel p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid ${m.icon} text-xs text-slate-400"></i>
+                            <span class="font-bold text-slate-300">${m.name}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${cur ? `<span class="tier-badge tier-${cur.toLowerCase()}">${cur}</span>` : '<span class="text-slate-600 font-medium">-</span>'}
+                            ${peak && peak !== cur ? `<span class="text-[10px] text-slate-500 font-mono">(Peak: ${peak})</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
             container.innerHTML = `
                 <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
                     <div class="flex flex-col items-center justify-center glass-panel p-4 rounded-3xl border border-white/10 min-w-[180px] w-full sm:w-auto relative overflow-hidden">
                         <canvas id="skinContainer3d" class="w-40 h-52 cursor-grab active:cursor-grabbing"></canvas>
                         <div class="text-[10px] text-slate-500 font-semibold mb-2">3D View</div>
+                        <span class="text-[10px] px-3 py-1 rounded-xl font-bold ${p.accountType === 'licensed' ? 'bg-white/10 text-white border border-white/20' : 'bg-white/5 text-slate-400'}">
+                            ${p.accountType === 'licensed' ? I18N[currentLang].license : I18N[currentLang].pirate}
+                        </span>
                     </div>
 
                     <div class="flex-1 space-y-4 w-full">
                         <div>
-                            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">${nick}</h2>
+                            <div class="flex items-center justify-between gap-2">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">${nick}</h2>
+                                <span class="text-[11px] text-white font-black bg-white/10 px-2.5 py-1 rounded-full border border-white/20">
+                                    Overall Rank #${p.rank || 'N/A'}
+                                </span>
+                            </div>
                             <p class="text-xs font-mono text-slate-500 mt-0.5">Discord ID: ${p.discordId}</p>
                         </div>
-                        <div class="glass-panel p-3 rounded-2xl border border-white/5">
-                            <div class="text-slate-500 font-bold uppercase text-[9px]">Overall Score</div>
-                            <div class="text-lg font-black text-white mt-0.5">${p.overallScore || 0}</div>
+
+                        <div class="grid grid-cols-2 gap-2.5 text-xs">
+                            <div class="glass-panel p-3 rounded-2xl border border-white/5">
+                                <div class="text-slate-500 font-bold uppercase text-[9px]">Overall Score</div>
+                                <div class="text-lg font-black text-white mt-0.5">${p.overallScore || 0}</div>
+                            </div>
+                            <div class="glass-panel p-3 rounded-2xl border border-white/5">
+                                <div class="text-slate-500 font-bold uppercase text-[9px]">${I18N[currentLang].status}</div>
+                                <div class="text-lg font-black ${p.restricted ? 'text-red-400' : 'text-emerald-400'} mt-0.5">
+                                    ${p.restricted ? 'Restricted' : 'Active'}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tiers</h4>
+                            <div class="grid grid-cols-1 gap-1.5 max-h-40 overflow-y-auto custom-scrollbar pr-1">
+                                ${tiersList}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -902,18 +1043,42 @@
             setTimeout(() => {
                 try {
                     const canvas = document.getElementById('skinContainer3d');
-                    let skinViewer = new skinview3d.SkinViewer({
+                    skinViewerInstance = new skinview3d.SkinViewer({
                         canvas: canvas,
                         width: 160,
                         height: 200,
                         skin: `https://mc-heads.net/skin/${nick}`
                     });
-                    skinViewer.animation = new skinview3d.WalkingAnimation();
-                } catch (err) {}
+                    
+                    skinViewerInstance.fov = 70;
+                    skinViewerInstance.zoom = 0.9;
+                    skinViewerInstance.animation = new skinview3d.WalkingAnimation();
+                    skinViewerInstance.animation.speed = 0.6;
+                } catch (err) {
+                    console.warn("3D Skin failed to load:", err);
+                }
             }, 50);
         }
 
-        function closePlayerModal() { document.getElementById('playerModal').classList.add('hidden'); }
+        async function fetchPlayerData(identifier) {
+            if (playersCache[identifier]) return playersCache[identifier];
+            try {
+                const res = await fetch(`${API_BASE}/players/${identifier}`);
+                if (!res.ok) return null;
+                const data = await res.json();
+                playersCache[identifier] = data;
+                return data;
+            } catch { return null; }
+        }
+
+        function closePlayerModal() { 
+            document.getElementById('playerModal').classList.add('hidden');
+            if (skinViewerInstance) {
+                skinViewerInstance.dispose();
+                skinViewerInstance = null;
+            }
+        }
+        
         function toggleDiscordModal() { document.getElementById('discordModal').classList.toggle('hidden'); }
         
         function renderDiscordList() {
@@ -926,7 +1091,7 @@
                             <div class="text-[10px] font-mono text-slate-500">ID: ${d.id}</div>
                         </div>
                     </div>
-                    <a href="${d.invite}" target="_blank" class="bg-white text-black text-xs px-3 py-1.5 rounded-xl font-extrabold shadow-md">${I18N[currentLang].joinBtn}</a>
+                    <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-extrabold transition shadow-md">${I18N[currentLang].joinBtn}</a>
                 </div>
             `).join('');
         }
@@ -943,18 +1108,21 @@
             if (filtered.length > 0) {
                 resultsBox.innerHTML = filtered.map(p => `
                     <div onclick="openPlayerModal('${p.discordId}'); document.getElementById('searchResults').classList.add('hidden');" 
-                        class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5">
+                        class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5 last:border-0 transition">
                         <span class="font-bold text-xs text-white">${p.nickname}</span>
                         <span class="text-[10px] font-mono text-slate-500">ID: ${p.discordId}</span>
                     </div>
                 `).join('');
                 resultsBox.classList.remove('hidden');
             } else {
-                resultsBox.classList.add('hidden');
+                resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center font-medium">Ничего не найдено</div>`;
+                resultsBox.classList.remove('hidden');
             }
         }
 
-        function getDemoData() { return []; }
+        function getDemoData() {
+            return [];
+        }
     </script>
 </body>
 </html>
