@@ -29,35 +29,25 @@
             box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.8);
         }
         
-        /* Tier badges */
-        .tier-badge {
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 3px 7px;
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+        
 
         /* Контейнер для тиров в таблице */
         .gamemode-tiers-container {
             display: flex;
             align-items: flex-end;
             justify-content: flex-end;
-            gap: 12px;
+            gap: 8px;
         }
 
         .tier-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
         }
 
         .tier-item .mode-title {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             color: #64748b;
             letter-spacing: 0.5px;
@@ -65,8 +55,8 @@
         }
 
         .tier-item .icon-box {
-            width: 38px;
-            height: 38px;
+            width: 16px;
+            height: 16px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
@@ -74,11 +64,16 @@
             align-items: center;
             justify-content: center;
         }
-
+/* Компактный размер самой картинки */
         .tier-item .icon-box img {
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
             object-fit: contain;
+        /* Маленький бадж тира */
+        .tier-item .tier-badge {
+            font-size: 0.55rem;
+            padding: 1px 4px;
+            border-radius: 4px;
         }
         }
         .tier-ht1 { background: #ffffff; color: #000; font-weight: 900; box-shadow: 0 0 12px rgba(255,255,255,0.4); }
