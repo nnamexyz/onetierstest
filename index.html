@@ -85,6 +85,15 @@
     <!-- Canvas Background Particles -->
     <canvas id="bgParticles" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
+    <!-- Dynamic Custom Announcement Bar (Админ Панель) -->
+    <div id="customAnnouncementBar" class="hidden relative z-50 bg-gradient-to-r from-indigo-900/80 via-purple-900/80 to-slate-900/80 border-b border-indigo-500/30 px-4 py-2 text-center text-xs font-bold text-white shadow-lg animate-fade-in">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
+            <span class="bg-indigo-500 text-[9px] font-black uppercase px-2 py-0.5 rounded-md">Объявление</span>
+            <span id="announcementText"></span>
+            <a id="announcementLink" href="#" target="_blank" class="underline text-indigo-300 hover:text-white ml-1 hidden">Подробнее</a>
+        </div>
+    </div>
+
     <!-- Telegram Notification -->
     <div id="telegramWidget" class="fixed bottom-20 md:bottom-5 right-3 left-3 sm:left-auto sm:right-5 z-50 animate-fade-in max-w-sm">
         <div class="glass-panel p-3.5 sm:p-4 rounded-3xl border border-white/15 shadow-2xl flex items-center gap-3 relative overflow-hidden group">
@@ -135,6 +144,10 @@
                 <button onclick="navigateTo('leaderboard')" id="nav-leaderboard" class="px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10">
                     <i class="fa-solid fa-trophy"></i>
                     <span data-i18n="navLeaderboard">Лидерборд</span>
+                </button>
+                <button onclick="navigateTo('staff')" id="nav-staff" class="px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span data-i18n="navStaff">Состав</span>
                 </button>
                 <button onclick="navigateTo('guide')" id="nav-guide" class="px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5">
                     <i class="fa-solid fa-book-bookmark"></i>
@@ -219,7 +232,17 @@
             <div id="columnsViewContainer" class="hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300"></div>
         </div>
 
-        <!-- 2. GUIDE VIEW -->
+        <!-- 2. STAFF VIEW (Состав) -->
+        <div id="view-staff" class="hidden space-y-6 sm:space-y-8 animate-fade-in max-w-6xl mx-auto">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 text-center space-y-2">
+                <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight" data-i18n="staffTitle">Состав Команды и Тестеров</h2>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto" data-i18n="staffSubtitle">Все официальные тестеры, модераторы, администраторы и руководство OneTiers Network.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="staffGridContainer"></div>
+        </div>
+
+        <!-- 3. GUIDE VIEW -->
         <div id="view-guide" class="hidden space-y-6 sm:space-y-10 max-w-5xl mx-auto animate-fade-in">
             <div class="text-center space-y-2 py-2">
                 <span class="px-3 py-0.5 bg-white/5 border border-white/10 text-slate-300 rounded-full text-[10px] font-black tracking-widest uppercase" data-i18n="guideBadge">Инструкция</span>
@@ -259,12 +282,15 @@
             </div>
         </div>
 
-        <!-- 3. USER PROFILE VIEW -->
-        <div id="view-profile" class="hidden max-w-3xl mx-auto space-y-4 sm:space-y-6 animate-fade-in">
+        <!-- 4. USER PROFILE VIEW & ADMIN PANEL -->
+        <div id="view-profile" class="hidden max-w-4xl mx-auto space-y-4 sm:space-y-6 animate-fade-in">
             <div class="glass-panel p-5 sm:p-8 rounded-3xl flex flex-col sm:flex-row items-center gap-4 sm:gap-6 border border-white/10 shadow-2xl relative overflow-hidden">
                 <img id="userAvatar" src="" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-white/20 shadow-xl bg-black object-cover">
                 <div class="space-y-1 sm:space-y-2 text-center sm:text-left flex-1">
-                    <h2 id="userName" class="text-2xl sm:text-3xl font-black text-white tracking-tight"></h2>
+                    <div class="flex items-center justify-center sm:justify-start gap-2">
+                        <h2 id="userName" class="text-2xl sm:text-3xl font-black text-white tracking-tight"></h2>
+                        <div id="userTagsContainer" class="flex items-center gap-1"></div>
+                    </div>
                     <p id="userDiscordId" class="text-xs font-mono text-slate-400"></p>
                     <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 text-slate-200 text-xs rounded-lg font-bold">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -277,6 +303,37 @@
             </div>
 
             <div id="userProfileDetails" class="glass-panel p-5 sm:p-8 rounded-3xl space-y-4 sm:space-y-6 border border-white/10"></div>
+
+            <!-- Operator / Admin Panel -->
+            <div id="adminPanelContainer" class="hidden glass-panel p-5 sm:p-8 rounded-3xl space-y-5 border border-indigo-500/30 bg-indigo-950/20 shadow-2xl">
+                <div class="flex items-center gap-2 border-b border-indigo-500/20 pb-3">
+                    <i class="fa-solid fa-shield-halved text-indigo-400 text-xl"></i>
+                    <h3 class="text-lg font-black text-white">Панель Оператора / Админа</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Grant Tag Form -->
+                    <div class="space-y-3 bg-black/40 p-4 rounded-2xl border border-white/5">
+                        <h4 class="text-xs font-black uppercase text-indigo-300">Выдать ТЕГ пользователю</h4>
+                        <input type="text" id="adminTagTargetId" placeholder="Discord ID игрока..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <input type="text" id="adminTagName" placeholder="Текст ТЕГА (напр. VIP, Разработчик)..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <button onclick="submitAdminTag()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs py-2 rounded-xl transition">
+                            Выдать ТЕГ
+                        </button>
+                    </div>
+
+                    <!-- Create Announcement Form -->
+                    <div class="space-y-3 bg-black/40 p-4 rounded-2xl border border-white/5">
+                        <h4 class="text-xs font-black uppercase text-indigo-300">Доп. Сообщение (Пиар / Анонс)</h4>
+                        <input type="text" id="adminAnnounceText" placeholder="Текст сообщения..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <input type="text" id="adminAnnounceUrl" placeholder="Ссылка (необязательно)..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <input type="number" id="adminAnnounceHours" placeholder="Срок в часах (например, 24)..." value="24" class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <button onclick="submitAdminAnnouncement()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs py-2 rounded-xl transition">
+                            Опубликовать Объявление
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Auth Code Modal -->
@@ -363,6 +420,10 @@
             <i class="fa-solid fa-trophy text-base"></i>
             <span class="text-[10px] font-bold" data-i18n="navLeaderboard">Лидерборд</span>
         </button>
+        <button onclick="navigateTo('staff')" id="mobile-nav-staff" class="flex flex-col items-center gap-1 text-slate-400">
+            <i class="fa-solid fa-users-gear text-base"></i>
+            <span class="text-[10px] font-bold" data-i18n="navStaff">Состав</span>
+        </button>
         <button onclick="navigateTo('guide')" id="mobile-nav-guide" class="flex flex-col items-center gap-1 text-slate-400">
             <i class="fa-solid fa-book-bookmark text-base"></i>
             <span class="text-[10px] font-bold" data-i18n="navGuide">Гайд</span>
@@ -390,7 +451,10 @@
                 searchPlaceholder: "Поиск...",
                 login: "Войти",
                 navLeaderboard: "Лидерборд",
+                navStaff: "Состав",
                 navGuide: "Гайд",
+                staffTitle: "Состав Команды и Тестеров",
+                staffSubtitle: "Все официальные тестеры, модераторы, администраторы и руководство OneTiers Network.",
                 overallTitle: "One Tiers — Minecraft СНГ Тир-лист",
                 overallDesc: "Общий рейтинг сильнейших игроков по всем дисциплинам OneTiers",
                 gamemodeDesc: "Официальный распределительный тир-лист дисциплины",
@@ -436,7 +500,10 @@
                 searchPlaceholder: "Search...",
                 login: "Login",
                 navLeaderboard: "Leaderboard",
+                navStaff: "Staff",
                 navGuide: "Guide",
+                staffTitle: "Staff & Testers Team",
+                staffSubtitle: "All official testers, moderators, admins, and ownership of OneTiers Network.",
                 overallTitle: "One Tiers — Minecraft CIS Tierlist",
                 overallDesc: "Overall leaderboard of top players across all OneTiers disciplines",
                 gamemodeDesc: "Official tier ranking for",
@@ -513,6 +580,7 @@
 
         let currentCategory = 'overall';
         let leaderboardData = [];
+        let staffData = [];
         let playersCache = {};
         let currentUser = null;
         let authPollInterval = null;
@@ -534,6 +602,8 @@
             renderFAQ();
             checkAuth();
             loadLeaderboard();
+            loadAnnouncement();
+            loadStaffData();
         });
 
         function toggleLanguage() {
@@ -541,6 +611,7 @@
             localStorage.setItem('onetiers_lang', currentLang);
             applyLanguage();
             renderLeaderboard();
+            renderStaffGrid();
             renderGuideSection();
             renderFAQ();
             renderDiscordList();
@@ -560,6 +631,26 @@
 
         function closeTelegramWidget() {
             document.getElementById('telegramWidget').classList.add('hidden');
+        }
+
+        async function loadAnnouncement() {
+            try {
+                const res = await fetch(`${API_BASE}/announcement`);
+                const data = await res.json();
+                if (data.active && data.announcement) {
+                    const bar = document.getElementById('customAnnouncementBar');
+                    const txt = document.getElementById('announcementText');
+                    const link = document.getElementById('announcementLink');
+                    txt.innerText = data.announcement.message;
+                    if (data.announcement.url) {
+                        link.href = data.announcement.url;
+                        link.classList.remove('hidden');
+                    } else {
+                        link.classList.add('hidden');
+                    }
+                    bar.classList.remove('hidden');
+                }
+            } catch (e) {}
         }
 
         function initBackgroundParticles() {
@@ -608,15 +699,21 @@
         }
 
         function navigateTo(viewName) {
+            // Закрываем открытый Discord Modal при переходе по вкладкам
+            document.getElementById('discordModal').classList.add('hidden');
+
             document.getElementById('view-leaderboard').classList.add('hidden');
+            document.getElementById('view-staff').classList.add('hidden');
             document.getElementById('view-guide').classList.add('hidden');
             document.getElementById('view-profile').classList.add('hidden');
             document.getElementById('gamemodeNav').classList.add('hidden');
 
             document.getElementById('nav-leaderboard').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5";
+            document.getElementById('nav-staff').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5";
             document.getElementById('nav-guide').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5";
             
             document.getElementById('mobile-nav-leaderboard').className = "flex flex-col items-center gap-1 text-slate-400";
+            document.getElementById('mobile-nav-staff').className = "flex flex-col items-center gap-1 text-slate-400";
             document.getElementById('mobile-nav-guide').className = "flex flex-col items-center gap-1 text-slate-400";
 
             if (viewName === 'leaderboard') {
@@ -624,6 +721,10 @@
                 document.getElementById('gamemodeNav').classList.remove('hidden');
                 document.getElementById('nav-leaderboard').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10";
                 document.getElementById('mobile-nav-leaderboard').className = "flex flex-col items-center gap-1 text-white font-bold";
+            } else if (viewName === 'staff') {
+                document.getElementById('view-staff').classList.remove('hidden');
+                document.getElementById('nav-staff').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10";
+                document.getElementById('mobile-nav-staff').className = "flex flex-col items-center gap-1 text-white font-bold";
             } else if (viewName === 'guide') {
                 document.getElementById('view-guide').classList.remove('hidden');
                 document.getElementById('nav-guide').className = "px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-2 bg-white text-black shadow-lg shadow-white/10";
@@ -648,6 +749,45 @@
             currentCategory = catId;
             renderTabs();
             renderLeaderboard();
+        }
+
+        async function loadStaffData() {
+            try {
+                const res = await fetch(`${API_BASE}/staff`);
+                if (res.ok) staffData = await res.json();
+            } catch (e) {}
+            renderStaffGrid();
+        }
+
+        function renderStaffGrid() {
+            const container = document.getElementById('staffGridContainer');
+            if (!staffData || staffData.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center text-slate-500 py-10 font-bold">Загрузка состава...</div>`;
+                return;
+            }
+
+            container.innerHTML = staffData.map(st => {
+                const rawNick = st.nickname || `User_${st.discordId}`;
+                const nick = escapeHtml(rawNick);
+                const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(rawNick)}/48`;
+
+                const tagBadges = (st.tags || []).map(tg => 
+                    `<span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${escapeHtml(tg)}</span>`
+                ).join(' ');
+
+                return `
+                    <div class="glass-panel p-5 rounded-3xl border border-white/10 flex items-center gap-4 glass-panel-hover">
+                        <img src="${avatar}" class="w-12 h-12 rounded-2xl bg-black border border-white/10 shadow-lg" onerror="this.src='https://crafthead.net/helm/Steve/48'">
+                        <div class="space-y-1">
+                            <div class="font-extrabold text-white text-sm flex items-center gap-1.5">
+                                ${nick}
+                            </div>
+                            <div class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">${escapeHtml(st.role)}</div>
+                            <div class="flex items-center gap-1 pt-1">${tagBadges}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function renderGuideSection() {
@@ -714,7 +854,6 @@
                 leaderboardData = await res.json();
                 renderLeaderboard();
             } catch (err) {
-                leaderboardData = getDemoData();
                 renderLeaderboard();
             }
         }
@@ -788,7 +927,6 @@
                     <div onclick="openPlayerModal('${playerId}')" 
                         class="flex flex-col items-center justify-end cursor-pointer group transition-all duration-300 hover:scale-105 ${heightClass}">
                         
-                        <!-- Player Avatar & Name Info -->
                         <div class="flex flex-col items-center mb-3 text-center">
                             <div class="relative mb-2">
                                 <i class="fa-solid fa-crown absolute -top-4 left-1/2 -translate-x-1/2 text-sm ${crownColor} filter drop-shadow"></i>
@@ -798,7 +936,6 @@
                             <div class="text-[10px] font-extrabold text-slate-400 mt-0.5">${player.overallScore || 0} очков</div>
                         </div>
 
-                        <!-- Podium Step Block -->
                         <div class="w-full rounded-2xl flex flex-col items-center justify-center p-3 font-black text-2xl sm:text-4xl ${cardBgClass}">
                             <span>${place}</span>
                         </div>
@@ -808,13 +945,8 @@
 
             podiumContainer.innerHTML = `
                 <div class="grid grid-cols-3 gap-2 sm:gap-6 items-end max-w-2xl mx-auto px-2">
-                    <!-- Rank 2 (Left) -->
                     ${renderCard(p2, 2, 'h-48 sm:h-56', 'podium-card-2 text-slate-300', 'text-slate-300')}
-                    
-                    <!-- Rank 1 (Center - Highest) -->
                     ${renderCard(p1, 1, 'h-56 sm:h-64', 'podium-card-1 text-yellow-400', 'text-yellow-400')}
-                    
-                    <!-- Rank 3 (Right) -->
                     ${renderCard(p3, 3, 'h-40 sm:h-48', 'podium-card-3 text-amber-600', 'text-amber-600')}
                 </div>
             `;
@@ -832,9 +964,10 @@
                 const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(rawNick)}/32`;
                 const playerId = escapeHtml(player.discordId || player.nickname || '');
 
+                // ВАЖНО: Убрана надпись названия кита, оставлена иконка и значение тира
                 const col4 = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
                     const t = getPlayerTier(player, m);
-                    return t ? `<span class="tier-badge tier-${escapeHtml(t.toLowerCase())}"><i class="fa-solid ${m.icon}"></i> ${escapeHtml(m.name)}: ${escapeHtml(t)}</span>` : '';
+                    return t ? `<span class="tier-badge tier-${escapeHtml(t.toLowerCase())}"><i class="fa-solid ${m.icon}"></i> ${escapeHtml(t)}</span>` : '';
                 }).filter(Boolean).join(' ') || `<span class="text-xs text-slate-600">${I18N[currentLang].noTier}</span>`;
 
                 return `
@@ -845,7 +978,10 @@
                         <td class="p-3 sm:p-5 flex items-center gap-2.5 sm:gap-3.5">
                             <img src="${avatar}" class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/32'">
                             <div>
-                                <div class="font-bold text-white hover:text-slate-300 transition text-xs sm:text-sm">${nick}</div>
+                                <div class="font-bold text-white hover:text-slate-300 transition text-xs sm:text-sm flex items-center gap-1.5">
+                                    ${nick}
+                                    ${(player.tags || []).map(tg => `<span class="bg-indigo-500/20 text-indigo-300 text-[8px] font-black px-1.5 py-0.5 rounded uppercase border border-indigo-500/30">${escapeHtml(tg)}</span>`).join('')}
+                                </div>
                                 <div class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(player.discordId || 'N/A')}</div>
                             </div>
                         </td>
@@ -862,18 +998,14 @@
 
             leaderboardData.forEach(player => {
                 const tier = getPlayerTier(player, modeObj);
-                
                 if (tier && typeof tier === 'string') {
                     const num = tier.replace(/[^0-9]/g, '');
-                    if (tierGroups[num]) {
-                        tierGroups[num].push({ player, tier });
-                    }
+                    if (tierGroups[num]) tierGroups[num].push({ player, tier });
                 }
             });
 
             container.innerHTML = [1, 2, 3, 4, 5].map(tierNum => {
                 const items = tierGroups[tierNum] || [];
-                
                 items.sort((a, b) => (TIER_ORDER[a.tier] || 99) - (TIER_ORDER[b.tier] || 99));
 
                 const htItems = items.filter(x => x.tier.startsWith('HT'));
@@ -1010,7 +1142,14 @@
                 document.getElementById('userName').innerText = currentUser.username;
                 document.getElementById('userDiscordId').innerText = `Discord ID: ${currentUser.id}`;
                 document.getElementById('userAvatar').src = currentUser.avatar;
-                
+
+                // Отображаем админ панель для стаффа / операторов
+                if (currentUser.playerData && (currentUser.playerData.isStaff || currentUser.id === '1441124301456805978')) {
+                    document.getElementById('adminPanelContainer').classList.remove('hidden');
+                } else {
+                    document.getElementById('adminPanelContainer').classList.add('hidden');
+                }
+
                 renderUserProfileData(currentUser.id);
             } else {
                 container.innerHTML = `
@@ -1022,6 +1161,54 @@
             }
         }
 
+        async function submitAdminTag() {
+            const targetId = document.getElementById('adminTagTargetId').value.trim();
+            const tagName = document.getElementById('adminTagName').value.trim();
+            if (!targetId || !tagName || !currentUser) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/tags`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operator_discord_id: currentUser.id,
+                        target_discord_id: targetId,
+                        tag: tagName
+                    })
+                });
+                if (res.ok) {
+                    alert('ТЕГ успешно выдан!');
+                    document.getElementById('adminTagTargetId').value = '';
+                    document.getElementById('adminTagName').value = '';
+                    loadLeaderboard();
+                }
+            } catch (e) { alert('Ошибка выдачи тега'); }
+        }
+
+        async function submitAdminAnnouncement() {
+            const msg = document.getElementById('adminAnnounceText').value.trim();
+            const url = document.getElementById('adminAnnounceUrl').value.trim();
+            const hours = parseInt(document.getElementById('adminAnnounceHours').value) || 24;
+            if (!msg || !currentUser) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/announcement`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operator_discord_id: currentUser.id,
+                        message: msg,
+                        url: url,
+                        duration_hours: hours
+                    })
+                });
+                if (res.ok) {
+                    alert('Объявление опубликовано на сайте!');
+                    loadAnnouncement();
+                }
+            } catch (e) { alert('Ошибка публикаций'); }
+        }
+
         async function renderUserProfileData(discordId) {
             const container = document.getElementById('userProfileDetails');
             const data = await fetchPlayerData(discordId);
@@ -1029,6 +1216,13 @@
             if (!data) {
                 container.innerHTML = `<div class="text-xs text-slate-500">Failed to load profile data.</div>`;
                 return;
+            }
+
+            const tagsContainer = document.getElementById('userTagsContainer');
+            if (tagsContainer) {
+                tagsContainer.innerHTML = (data.tags || []).map(tg => 
+                    `<span class="bg-indigo-500/20 text-indigo-300 text-[10px] font-black px-2 py-0.5 rounded-md uppercase border border-indigo-500/30">${escapeHtml(tg)}</span>`
+                ).join(' ');
             }
 
             const tiersList = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
@@ -1121,7 +1315,10 @@
                     <div class="flex-1 space-y-4 w-full">
                         <div>
                             <div class="flex items-center justify-between gap-2">
-                                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">${nick}</h2>
+                                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+                                    ${nick}
+                                    ${(p.tags || []).map(tg => `<span class="bg-indigo-500/20 text-indigo-300 text-[9px] font-black px-2 py-0.5 rounded-md uppercase border border-indigo-500/30">${escapeHtml(tg)}</span>`).join('')}
+                                </h2>
                                 <span class="text-[11px] text-white font-black bg-white/10 px-2.5 py-1 rounded-full border border-white/20">
                                     Overall Rank #${p.rank || 'N/A'}
                                 </span>
@@ -1206,41 +1403,11 @@
                             <div class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(d.id)}</div>
                         </div>
                     </div>
-                    <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-extrabold transition shadow-md">${I18N[currentLang].joinBtn}</a>
+                    <a href="${d.invite}" target="_blank" class="bg-white hover:bg-slate-200 text-black text-xs font-extrabold px-3 py-1.5 rounded-xl transition">
+                        ${I18N[currentLang].joinBtn}
+                    </a>
                 </div>
             `).join('');
-        }
-
-        async function handleSearch(query) {
-            const resultsBox = document.getElementById('searchResults');
-            const trimmed = query.trim();
-            if (trimmed.length < 2) { resultsBox.classList.add('hidden'); return; }
-
-            const filtered = leaderboardData.filter(p => 
-                (p.nickname && p.nickname.toLowerCase().includes(trimmed.toLowerCase())) ||
-                (p.discordId && p.discordId.includes(trimmed))
-            );
-
-            if (filtered.length > 0) {
-                resultsBox.innerHTML = filtered.map(p => {
-                    const idToPass = escapeHtml(p.discordId || p.nickname || '');
-                    return `
-                        <div onclick="openPlayerModal('${idToPass}'); document.getElementById('searchResults').classList.add('hidden');" 
-                            class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5 last:border-0 transition">
-                            <span class="font-bold text-xs text-white">${escapeHtml(p.nickname || 'Unknown')}</span>
-                            <span class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(p.discordId || 'N/A')}</span>
-                        </div>
-                    `;
-                }).join('');
-                resultsBox.classList.remove('hidden');
-            } else {
-                resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center font-medium">Ничего не найдено</div>`;
-                resultsBox.classList.remove('hidden');
-            }
-        }
-
-        function getDemoData() {
-            return [];
         }
     </script>
 </body>
