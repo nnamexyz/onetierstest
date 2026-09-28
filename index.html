@@ -534,7 +534,24 @@
             renderFAQ();
             checkAuth();
             loadLeaderboard();
+            setupModalOutsideClicks();
         });
+
+        // Закрытие модальных окон при клике вне их контента
+        function setupModalOutsideClicks() {
+            const modals = ['authModal', 'playerModal', 'discordModal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        if (id === 'authModal') closeAuthModal();
+                        else if (id === 'playerModal') closePlayerModal();
+                        else if (id === 'discordModal') toggleDiscordModal();
+                    }
+                });
+            });
+        }
 
         function toggleLanguage() {
             currentLang = currentLang === 'RU' ? 'ENG' : 'RU';
@@ -832,9 +849,10 @@
                 const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(rawNick)}/32`;
                 const playerId = escapeHtml(player.discordId || player.nickname || '');
 
+                /* Убираем название кита, оставляем только иконку и сам тир */
                 const col4 = GAMEMODES.filter(m => m.id !== 'overall').map(m => {
                     const t = getPlayerTier(player, m);
-                    return t ? `<span class="tier-badge tier-${escapeHtml(t.toLowerCase())}"><i class="fa-solid ${m.icon}"></i> ${escapeHtml(m.name)}: ${escapeHtml(t)}</span>` : '';
+                    return t ? `<span class="tier-badge tier-${escapeHtml(t.toLowerCase())}"><i class="fa-solid ${m.icon}"></i> ${escapeHtml(t)}</span>` : '';
                 }).filter(Boolean).join(' ') || `<span class="text-xs text-slate-600">${I18N[currentLang].noTier}</span>`;
 
                 return `
@@ -1213,34 +1231,38 @@
 
         async function handleSearch(query) {
             const resultsBox = document.getElementById('searchResults');
-            const trimmed = query.trim();
-            if (trimmed.length < 2) { resultsBox.classList.add('hidden'); return; }
-
-            const filtered = leaderboardData.filter(p => 
-                (p.nickname && p.nickname.toLowerCase().includes(trimmed.toLowerCase())) ||
-                (p.discordId && p.discordId.includes(trimmed))
-            );
-
-            if (filtered.length > 0) {
-                resultsBox.innerHTML = filtered.map(p => {
-                    const idToPass = escapeHtml(p.discordId || p.nickname || '');
-                    return `
-                        <div onclick="openPlayerModal('${idToPass}'); document.getElementById('searchResults').classList.add('hidden');" 
-                            class="p-3 hover:bg-white/5 cursor-pointer flex items-center justify-between border-b border-white/5 last:border-0 transition">
-                            <span class="font-bold text-xs text-white">${escapeHtml(p.nickname || 'Unknown')}</span>
-                            <span class="text-[10px] font-mono text-slate-500">ID: ${escapeHtml(p.discordId || 'N/A')}</span>
-                        </div>
-                    `;
-                }).join('');
-                resultsBox.classList.remove('hidden');
-            } else {
-                resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center font-medium">Ничего не найдено</div>`;
-                resultsBox.classList.remove('hidden');
+            if (!query || query.trim().length < 2) {
+                resultsBox.classList.add('hidden');
+                return;
             }
+            try {
+                const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                if (!res.ok) return;
+                const items = await res.json();
+                if (items.length === 0) {
+                    resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Ничего не найдено</div>`;
+                } else {
+                    resultsBox.innerHTML = items.map(item => `
+                        <div onclick="openPlayerModal('${escapeHtml(item.discordId)}'); document.getElementById('searchResults').classList.add('hidden');" 
+                            class="p-2.5 hover:bg-white/10 cursor-pointer flex items-center gap-2.5 border-b border-white/5 last:border-0 transition">
+                            <img src="https://mc-heads.net/avatar/${encodeURIComponent(item.nickname)}/24" class="w-6 h-6 rounded-lg bg-black border border-white/10" onerror="this.src='https://crafthead.net/helm/Steve/24'">
+                            <div>
+                                <div class="text-xs font-bold text-white">${escapeHtml(item.nickname)}</div>
+                                <div class="text-[9px] font-mono text-slate-500">ID: ${escapeHtml(item.discordId)}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+                resultsBox.classList.remove('hidden');
+            } catch (e) {}
         }
 
         function getDemoData() {
-            return [];
+            return [
+                { discordId: "123456789", nickname: "AlexPro", overallScore: 180, accountType: "licensed", rank: 1, swordTiers: ["HT1"], opTiers: ["HT2"], dpotTiers: ["LT1"] },
+                { discordId: "987654321", nickname: "DragonSlayer", overallScore: 140, accountType: "cracked", rank: 2, swordTiers: ["LT1"], opTiers: ["HT1"], dpotTiers: [] },
+                { discordId: "555555555", nickname: "PvP_God", overallScore: 110, accountType: "licensed", rank: 3, swordTiers: ["HT2"], opTiers: ["LT2"], dpotTiers: ["HT3"] }
+            ];
         }
     </script>
 </body>
